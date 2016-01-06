@@ -1,0 +1,22 @@
+{
+  "articles":[
+    {
+      "id":"1",
+      "title":"title1",
+      "content":"content1",
+      "author":{
+        "id":"1",
+        "name":"sky"
+      }
+    },
+    {
+      "id":"2",
+      "title":"title2",
+      "content":"content2",
+      "author":{
+        "id":"2",
+        "name":"tom"
+      }
+    }
+  ]
+}
