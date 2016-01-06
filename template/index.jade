@@ -1,0 +1,29 @@
+doctype html
+html
+
+    head
+        title Hello, React
+        {% for (var css in o.htmlWebpackPlugin.files.css) {
+            var url = o.htmlWebpackPlugin.files.css[css];
+            url = url.replace(/(?:.+\/)?([\w-_?=.]+)$/ig,function(c1, c2){
+            return c2;
+            })
+            url = '/static/' + url;
+        %}
+        link(href="{%= url %}", rel="stylesheet")
+        {% } %}
+    body
+
+        #app
+
+        {% for (var chunk in o.htmlWebpackPlugin.files.chunks) {
+                var url = o.htmlWebpackPlugin.files.chunks[chunk].entry;
+                url = url.replace(/(?:.+\/)?([\w-_?=.]+)$/ig,function(c1, c2){
+                    return c2;
+                })
+                url = '/static/' + url;
+        %}
+        script(src="{%= url%}")
+        {% } %}
+        script.
+            ReactDOM.render(App(!{props}), document.getElementById('app'));

@@ -5,7 +5,7 @@ export default class ListInstance extends Component {
 
     render() {
         return (
-            <List>
+            <List static border striped>
                 {this.props.listdatas.map(cell =>
                     <ListItem key={cell.id}>
                         {cell.content}

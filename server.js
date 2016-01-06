@@ -5,6 +5,10 @@ var config = require('./webpack.dev.config.js')
 var fs = require('fs')
 var sleep = require('sleep');
 var jade = require('jade');
+var superagent = require('superagent');
+//var jsonApi = require('superagent-jsonapify');
+
+//jsonApi(superagent);
 
 
 
@@ -34,15 +38,24 @@ app.get("/mock/*.json", function(req, res){
 });
 
 
-app.get("/", function(req, res) {
+app.get("/*", function(req, res) {
     var url = __dirname + '/mock/index.json';
     var _data = JSON.parse(fs.readFileSync(url));
     var locals = {
         props: JSON.stringify(_data),
     };
-    var layout = process.cwd() + '/index.jade';
-    var html = jade.compileFile(layout, { pretty: true })(locals);
-    res.send(html);
+    superagent.get('http://localhost:3000/static/index.jade').end(function(err, respone){
+        if(!err){
+            var layout = respone.text;
+            var html = jade.compile(layout, { pretty: true })(locals);
+            res.send(html);
+        }else{
+            res.send('模板渲染错误');
+        }
+    });
+    //var layout = process.cwd() + '/index.jade';
+    //var html = jade.compileFile(layout, { pretty: true })(locals);
+    //res.send(html);
     //res.sendFile(__dirname + '/index.html')
 });
 

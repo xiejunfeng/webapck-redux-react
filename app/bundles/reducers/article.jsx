@@ -9,7 +9,6 @@ export function getArticle(state, id) {
 export function getAllArticles(state){
 
     let ids = state.result.articles || [];
-    console.log(ids);
     return ids.map(id => getArticle(state, id))
 }
 

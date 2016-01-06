@@ -1,12 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 export default class Information extends Component {
     render() {
+        const {articleListDatas} = this.props
+        console.log(this.props)
         return (
             <div>
                 test
+                <div>
+                    <AticleList listdatas = {articleListDatas}></AticleList>
+                </div>
             </div>
         );
     }
@@ -15,5 +17,5 @@ export default class Information extends Component {
 
 
 Information.propTypes = {
-    children: PropTypes.object
+    articleListDatas:PropTypes.array
 };

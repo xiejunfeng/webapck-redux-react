@@ -14,8 +14,6 @@ const history = createBrowserHistory();
 
 export default props => {
 
-    console.log(props);
-
     let storeData = {
         result:{},
         entities:{}

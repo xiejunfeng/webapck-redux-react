@@ -38,7 +38,7 @@ module.exports = {
         //公共模块打包
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'vendor-bundle.js',
+            filename: 'vendor-bundle-[hash].js',
             minChunks: Infinity,
         }),
     ],
