@@ -1,7 +1,9 @@
-# webapck-redux-react
-webapck-redux-react
-
 # redux + react + react-router + webpack
+
+npm install
+
+node server.js
+
 ## 背景
 
 主站视觉改版，希望改版的同时能够提高性能和开发效率；由于最近react的概念还是蛮火的，也想跟一下潮流，就进行了相关调研，并觉着方案可行，能实现此次改版重构的目标

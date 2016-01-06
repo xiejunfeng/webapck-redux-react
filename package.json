@@ -8,10 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shakacode/react-webpack-rails-tutorial.git"
+    "url": "git+https://github.com/xiejunfeng/webapck-redux-react.git"
   },
   "keywords": [
-    "test"
+    "webpack",
+    "react",
+    "redux",
+    "webpack-react-redux"
   ],
   "author": "junfeng.xie",
   "license": "MIT",
