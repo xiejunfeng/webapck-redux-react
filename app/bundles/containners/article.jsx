@@ -11,11 +11,12 @@ import AticleList from '../components/articleList';
 export default class acticleContainer extends Component {
 
     shouldComponentUpdate(nextProps){
-        console.log(nextProps, this.props)
-        return true;
+        return nextProps.articleListDatas.articleListResult !== this.props.articleListResult;
     }
     render() {
         const {articleListDatas} = this.props
+        console.log(articleListDatas)
+        console.log('render ------------- acticleContainer')
         return (
             <div>
                 <AticleList listdatas = {articleListDatas}></AticleList>
@@ -30,10 +31,9 @@ acticleContainer.propTypes = {
 
 
 
-
-
 function mapStateToProps(state){
     return {
+        articleListResult:state.result.articles,
         articleListDatas: getAllArticles(state)
     }
 }

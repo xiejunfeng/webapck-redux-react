@@ -8,9 +8,5 @@ export const comment = new Schema('comments');
 article.define({
     author: user
 });
-comment.define({
-    article:article,
-    reviewer:user
-});
 
 

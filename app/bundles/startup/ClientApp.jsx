@@ -8,6 +8,7 @@ import createStore from '../store/index';
 import styles from '../../amazeui/less/amazeui.less';
 import * as Schemas from '../api/dataNormalize';
 import { normalize, Schema, arrayOf } from 'normalizr';
+import comments from '../mock/comment.json'
 
 
 const history = createBrowserHistory();
@@ -25,6 +26,13 @@ export default props => {
     });
     storeData.result.articles = articles.result.articles;
     storeData.entities = {...storeData.entities, ...articles.entities};
+
+    let _comments = normalize(comments,{
+        comments: arrayOf(Schemas.comment)
+    });
+
+    storeData.result.comments = _comments.result.comments;
+    storeData.entities = {...storeData.entities, ..._comments.entities};
 
     const store = createStore(storeData);
 

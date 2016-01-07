@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router';
 
 import { getAllArticles } from '../reducers/article'
+import { getAllComments } from '../reducers/comment'
 import CommentList from '../components/commentList';
 
 
@@ -11,10 +12,10 @@ import CommentList from '../components/commentList';
 export default class commentContainner extends Component {
 
     shouldComponentUpdate(nextProps){
-        console.log(nextProps, this.props)
-        return true;
+        return nextProps.commentListResult !== this.props.commentListResult;
     }
     render() {
+        console.log('render ------------- commentContainner')
         const {commentLists} = this.props
         return (
             <div>
@@ -25,13 +26,16 @@ export default class commentContainner extends Component {
 }
 
 commentContainner.propTypes = {
+    commentListResult:PropTypes.array,
     commentLists:PropTypes.array
 }
 
 
 function mapStateToProps(state){
+    console.log(state.result.comments);
     return {
-        commentLists: getAllArticles(state)
+        commentListResult:state.result.comments,
+        commentLists: getAllComments(state)
     }
 }
 
