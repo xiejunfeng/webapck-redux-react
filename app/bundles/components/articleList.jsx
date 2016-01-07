@@ -7,11 +7,12 @@ export default class ListInstance extends Component {
         return (
             <List>
                 {this.props.listdatas.map(cell =>
-                    <ListItem key={cell.id}>
-                        {cell.content}
-                    </ListItem>
-                )}
+                <ListItem key={cell.id}>
+                    {cell.content}
+                </ListItem>
+                    )}
             </List>
+
         )
     }
 }

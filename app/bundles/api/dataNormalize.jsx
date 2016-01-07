@@ -9,4 +9,7 @@ article.define({
     author: user
 });
 
-
+comment.define({
+    article:article,
+    reviewer:user
+});

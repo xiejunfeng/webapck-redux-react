@@ -31,35 +31,35 @@ node server.js
 待测试-------------
 
 ## 相关技术
-1、redux状态机管理，天生的与react友好融合
-2、react-router + history 路由管理
-3、react + react-dom 组件开发，模板渲染
-4、react-redux 链接ract+redux 便于store、props传递
-5、redux-logger 开发阶段监听状态变化
-6、redux-thunk 中间件，便于dispatch分发
-7、loash 基础功能库
-8、normalizr 数据范式化，利于性能
-9、superagent 请求管理，客户端和服务器端可公用
-10、 webpack  资源打包  （目前css打包这一块儿还是想实现一些比较奇葩的逻辑，但是并没有找到特别好的解决方案）
+* 1、redux状态机管理，天生的与react友好融合
+* 2、react-router + history 路由管理
+* 3、react + react-dom 组件开发，模板渲染
+* 4、react-redux 链接ract+redux 便于store、props传递
+* 5、redux-logger 开发阶段监听状态变化
+* 6、redux-thunk 中间件，便于dispatch分发
+* 7、loash 基础功能库
+* 8、normalizr 数据范式化，利于性能
+* 9、superagent 请求管理，客户端和服务器端可公用
+* 10、 webpack  资源打包  （目前css打包这一块儿还是想实现一些比较奇葩的逻辑，但是并没有找到特别好的解决方案）
 
 ## 优点（不是优点的优点，所谓的自我感觉良好，嘿嘿）
-1、各种渲染任意切换，seo服务器渲染，用户体验客户端渲染，资源加载、接口响应延时渲染、渲染
-2、路由前后端统一
-3、资源打包热编译，开发响应迅速，静态合并，体积轻小，内嵌和外部引用灵活，按需加载功能也很炫酷，可做细粒度规划
-4、单页即是多页，多页亦可单页
-5、组件式开发 方便复用，迁移
-6、数据单项传递，解决前端各种状态混乱不方便管理和维护的问题
-7、编码方式规范，利于团队合作
-8、方便以后接入node中间层，项目整体的复制和迁移性非常高
-9、狂拽炫酷*炸天
+* 1、各种渲染任意切换，seo服务器渲染，用户体验客户端渲染，资源加载、接口响应延时渲染、渲染
+* 2、路由前后端统一
+* 3、资源打包热编译，开发响应迅速，静态合并，体积轻小，内嵌和外部引用灵活，按需加载功能也很炫酷，可做细粒度规划
+* 4、单页即是多页，多页亦可单页
+* 5、组件式开发 方便复用，迁移
+* 6、数据单项传递，解决前端各种状态混乱不方便管理和维护的问题
+* 7、编码方式规范，利于团队合作
+* 8、方便以后接入node中间层，项目整体的复制和迁移性非常高
+* 9、狂拽炫酷*炸天
 
 ## 挑战和问题
-1、es6新规范
-2、组件的拆分
-3、逻辑被封装，代码的组织单一，失去了编码乐趣（某人的言论）
-4、新人学习成本高，上手难度较大
-5、文档输出     （有这个想法，但是感觉业务压力并行，很难去实践）
-6、单元测试引入  （项目上线之后，就应该会抽时间去推这个事情）
+* 1、es6新规范
+* 2、组件的拆分
+* 3、逻辑被封装，代码的组织单一，失去了编码乐趣（某人的言论）
+* 4、新人学习成本高，上手难度较大
+* 5、文档输出     （有这个想法，但是感觉业务压力并行，很难去实践）
+* 6、单元测试引入  （项目上线之后，就应该会抽时间去推这个事情）
 
 ## 技术详解
 [redux 英文文档](http://rackt.org/redux/index.html) , [中文文档](http://camsong.github.io/redux-in-chinese/index.html)；
@@ -144,51 +144,90 @@ let reducer = reducers;
 ```js
 //import App from '../containners/App'
 export default (
-    <Route path="/">
-        <IndexRoute
-            component={App}
-        />
+    <Route path="/" component={App}>
+
+            <Route
+                path="comment"
+                component={commentContainner}>
+            </Route>
+            <Route
+                path="article"
+                component={ArticleContainer}>
+            </Route>
     </Route>
 )
+
 ```
 
-6、真正的页面容器 
+6、真正的页面容器
 
 ```js
+import React, { Component,PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux'
+import { Link } from 'react-router';
+
 export default class App extends Component {
+
     render() {
-        const {articleListDatas} = this.props
         return (
             <div>
-             //..... 
-             <h1>App</h1>
-	           <ul>
-	               <li><Link to="/information">information</Link></li>
-	               <li><Link to="/inbox">Inbox</Link></li>
-	           </ul>
-	           <diV>
-	               <AticleList listdatas = {articleListDatas}></AticleList>
-	           </div>
+                <h1>App</h1>
+                <ul>
+                    <li><Link to="/article">article</Link></li>
+                    <li><Link to="/comment">comment</Link></li>
+                </ul>
+                {this.props.children || "你好"}
             </div>
         )
     }
 }
-App.propTypes = {
-    articleListDatas:PropTypes.array
-}
 
-//属性传递  这个方法每次state变化时都会调用
-function mapStateToProps(state){
-    return {
-        articleListDatas: getAllArticles(state)
+export default connect()(App)
+
+```
+
+```js
+
+export default class commentContainner extends Component {
+
+    shouldComponentUpdate(nextProps){
+    		//防止每次状态机改变都重新渲染组件
+    		//其他对象属性可通过 nextProps.someProps.id !=== this.props.someProps.id
+    		//静态组件  return false；
+        return nextProps.commentListResult !== this.props.commentListResult;
+    }
+    render() {
+        console.log('render ------------- commentContainner')
+        const {commentLists} = this.props
+        return (
+            <div>
+                <CommentList listdatas = {commentLists}></CommentList>
+            </div>
+        )
     }
 }
 
-//connect  是真正连接redux和react的地方，向下传递state（prop）
-//一个页面最好只有一个containner，connnet比较耗性能
-export default connect(mapStateToProps)(App)
+commentContainner.propTypes = {
+    commentListResult:PropTypes.array,
+    commentLists:PropTypes.array
+}
+
+
+function mapStateToProps(state){
+    console.log(state.result.comments);
+    return {
+    		//由于实际渲染的list每次都是新生成的数组，需要多缓存一个不可变的数组，在组件刷新判断时作为依据
+        commentListResult:state.result.comments,
+
+        commentLists: getAllComments(state)
+    }
+}
+
 
 ```
+
+
 
 7、reducers定义
 
@@ -254,7 +293,7 @@ import { List, ListItem } from 'amazeui-react'
 
 export default class ListInstance extends Component {
     render() {
-       
+
         return (
             <List>
             //属性会从父容器传递下来
